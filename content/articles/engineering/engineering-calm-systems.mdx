@@ -1,0 +1,82 @@
+---
+title: Engineering Calm Systems
+description: Principles for building software systems that stay understandable and resilient over time.
+summary: A practical framework for designing systems that scale team cognition as much as infrastructure.
+publishedDate: 2026-07-08
+updatedDate: 2026-07-08
+tags:
+  - architecture
+  - engineering
+  - reliability
+topics:
+  - systems-design
+  - product-engineering
+category: Engineering
+series: engineering-foundations
+author: niraj-mourya
+featured: true
+draft: false
+coverImage: /images/placeholders/calm-systems-cover.jpg
+coverAlt: Abstract orbital lines representing system interactions.
+ogImage: /images/og-default.jpg
+keywords:
+  - software architecture
+  - systems design
+  - reliability
+  - engineering thinking
+difficulty: intermediate
+technologies:
+  - TypeScript
+  - Next.js
+  - Node.js
+references:
+  - title: Designing Data-Intensive Applications
+    url: https://dataintensive.net/
+relatedArticles:
+  - thoughtful-api-contracts
+articleType: technical
+contentType: article
+---
+
+# Engineering Calm Systems
+
+Building systems is easy. Maintaining clarity over years is the hard part.
+
+> [!NOTE]
+> This placeholder article exists to validate the MDX content pipeline end-to-end.
+
+## Why this matters
+
+- Teams change.
+- Product priorities shift.
+- Infrastructure evolves.
+
+Calm systems optimize for continuity of understanding.
+
+## A simple rubric
+
+| Dimension | Question |
+| --- | --- |
+| Clarity | Can a new engineer reason about it in one session? |
+| Safety | Can changes be rolled out safely? |
+| Resilience | Can the system degrade gracefully? |
+
+## Checklist
+
+- [x] Explicit boundaries
+- [x] Typed contracts
+- [ ] Automated quality gates everywhere
+
+A small code example:
+
+```ts
+export function classifyChangeRisk(scope: "local" | "shared" | "critical"): number {
+	if (scope === "critical") return 3;
+	if (scope === "shared") return 2;
+	return 1;
+}
+```
+
+![Architecture placeholder image](/images/placeholders/architecture-map.png)
+
+[^1]: Placeholder footnote to validate GFM footnotes.
