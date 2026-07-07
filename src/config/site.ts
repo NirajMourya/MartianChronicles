@@ -135,6 +135,11 @@ export interface FeatureFlags {
 	readonly pdfDownloads: boolean;
 }
 
+export interface FooterConfig {
+	readonly description: string;
+	readonly builtWith: readonly string[];
+}
+
 export const siteMetadata: SiteMetadata = Object.freeze({
 	name: "Martian Chronicles",
 	domain: "https://martianchronicles.nirajmourya.in",
@@ -259,4 +264,9 @@ export const defaultArticleSettings: DefaultArticleSettings = Object.freeze({
 	enableTableOfContents: true,
 	enableRelatedArticles: true,
 	allowPdfDownloads: true,
+});
+
+export const footerConfig: FooterConfig = Object.freeze({
+	description: siteMetadata.tagline,
+	builtWith: Object.freeze(["Next.js", "React", "Material UI"]),
 });

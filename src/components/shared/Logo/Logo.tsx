@@ -1,6 +1,3 @@
-"use client";
-
-import Box from "@mui/material/Box";
 import { forwardRef } from "react";
 
 export type LogoVariant = "horizontal" | "emblem" | "wordmark";
@@ -68,14 +65,15 @@ export const Logo = forwardRef<HTMLSpanElement, LogoProps>(function Logo(
 	const renderEmblem = variant === "emblem" || variant === "horizontal";
 
 	return (
-		<Box
+		<span
 			ref={ref}
 			className={className}
-			component="span"
-			display="inline-flex"
-			alignItems="center"
-			lineHeight={0}
-			sx={{ color: "text.primary" }}
+			style={{
+				display: "inline-flex",
+				alignItems: "center",
+				lineHeight: 0,
+				color: "currentColor",
+			}}
 		>
 			<svg
 				role="img"
@@ -123,6 +121,6 @@ export const Logo = forwardRef<HTMLSpanElement, LogoProps>(function Logo(
 					</g>
 				) : null}
 			</svg>
-		</Box>
+		</span>
 	);
 });
