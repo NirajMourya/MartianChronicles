@@ -6,6 +6,8 @@
  * single source of truth.
  */
 
+import { themeConfig } from "./theme";
+
 export type AbsoluteUrl = `https://${string}`;
 
 export interface SiteMetadata {
@@ -91,6 +93,20 @@ export interface RssConfig {
 	readonly categories: readonly string[];
 }
 
+export interface IconConfig {
+	readonly icon: string;
+	readonly shortcut: string;
+	readonly apple: string;
+}
+
+export interface ViewportConfig {
+	readonly colorScheme: "dark light" | "light dark";
+	readonly themeColor: {
+		readonly light: string;
+		readonly dark: string;
+	};
+}
+
 export interface PaginationConfig {
 	readonly defaultPageSize: number;
 	readonly maxPageSize: number;
@@ -134,7 +150,21 @@ export const organizationMetadata: OrganizationMetadata = Object.freeze({
 	legalName: "Martian Chronicles",
 	displayName: "Martian Chronicles",
 	url: siteMetadata.domain,
-	logoPath: "/images/logo.png",
+	logoPath: "/brand/logo.svg",
+});
+
+export const iconConfig: IconConfig = Object.freeze({
+	icon: "/brand/favicon.svg",
+	shortcut: "/brand/favicon.svg",
+	apple: "/brand/app-icon.svg",
+});
+
+export const viewportConfig: ViewportConfig = Object.freeze({
+	colorScheme: "dark light",
+	themeColor: Object.freeze({
+		light: themeConfig.palette.light.background,
+		dark: themeConfig.palette.dark.background,
+	}),
 });
 
 export const featureFlags: FeatureFlags = Object.freeze({

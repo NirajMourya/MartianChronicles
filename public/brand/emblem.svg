@@ -1,0 +1,9 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Martian Chronicles Emblem</title>
+  <desc id="desc">A geometric emblem combining orbit lines and chronicle bars with Martian Orange accent.</desc>
+  <circle cx="128" cy="128" r="78" stroke="#1A2233" stroke-width="12"/>
+  <ellipse cx="128" cy="128" rx="102" ry="68" transform="rotate(-18 128 128)" stroke="#FF5A1F" stroke-width="8"/>
+  <rect x="96" y="96" width="14" height="64" rx="5" fill="#1A2233"/>
+  <rect x="121" y="84" width="14" height="88" rx="5" fill="#FF5A1F"/>
+  <rect x="146" y="102" width="14" height="52" rx="5" fill="#1A2233"/>
+</svg>
