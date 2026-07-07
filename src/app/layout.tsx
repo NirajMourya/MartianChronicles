@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 
 import { authorConfig, iconConfig, seoDefaults, siteMetadata, viewportConfig } from "@/config";
+import { Footer, Navbar } from "@/components";
 import { AppProviders } from "@/providers";
 import "./globals.css";
 
@@ -99,7 +100,9 @@ export default function RootLayout({
           Skip to content
         </a>
         <AppProviders>
+          <Navbar />
           <main id="main-content">{children}</main>
+          <Footer />
         </AppProviders>
       </body>
     </html>
