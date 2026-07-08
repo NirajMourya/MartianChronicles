@@ -56,12 +56,14 @@ export default async function SeriesPage({
 	const orderedArticles = [...articles].sort((a, b) => {
 		const aOrder = a.seriesOrder ?? Number.POSITIVE_INFINITY;
 		const bOrder = b.seriesOrder ?? Number.POSITIVE_INFINITY;
+		const aPublishedDate = a.publishedDate ?? a.updatedDate ?? "";
+		const bPublishedDate = b.publishedDate ?? b.updatedDate ?? "";
 
 		if (aOrder !== bOrder) {
 			return aOrder - bOrder;
 		}
 
-		return b.publishedDate.localeCompare(a.publishedDate);
+		return bPublishedDate.localeCompare(aPublishedDate);
 	});
 	const totalReadingTime = orderedArticles.reduce((sum, article) => sum + article.readingTimeMinutes, 0);
 	const pageCount = Math.max(1, Math.ceil(orderedArticles.length / pageSize));
