@@ -2,7 +2,9 @@ import Link from "next/link";
 
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import { Button, Container, Stack, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
+
+import { Button, Container, Stack } from "@/components/ui";
 
 export default function NotFoundPage() {
 	return (

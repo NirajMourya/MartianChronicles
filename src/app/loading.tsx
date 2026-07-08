@@ -1,4 +1,6 @@
-import { Box, Container, Skeleton, Stack } from "@mui/material";
+import { Box } from "@mui/material";
+
+import { Container, Skeleton, Stack } from "@/components/ui";
 
 export default function RootLoading() {
 	return (

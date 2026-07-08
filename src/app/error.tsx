@@ -5,7 +5,9 @@ import { useEffect } from "react";
 import Link from "next/link";
 
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+
+import { Button, Container, Stack } from "@/components/ui";
 
 export default function RootError({
 	error,
