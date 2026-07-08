@@ -4,7 +4,7 @@ import MuiTooltip, {
 	type TooltipProps as MuiTooltipProps,
 } from "@mui/material/Tooltip";
 
-export interface TooltipProps extends MuiTooltipProps {}
+export type TooltipProps = MuiTooltipProps;
 
 /**
  * Tooltip wrapper to keep a consistent transition and placement default.

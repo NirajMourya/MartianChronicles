@@ -5,7 +5,7 @@ import MuiDivider, {
 } from "@mui/material/Divider";
 import { forwardRef } from "react";
 
-export interface DividerProps extends MuiDividerProps {}
+export type DividerProps = MuiDividerProps;
 
 /**
  * Standard divider with semantic color from theme.

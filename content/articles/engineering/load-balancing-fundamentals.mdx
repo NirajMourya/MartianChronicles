@@ -1,0 +1,384 @@
+---
+title: "Load Balancing Fundamentals"
+
+slug: "load-balancing-fundamentals"
+
+description: "Learn the fundamentals of load balancing, including algorithms, Layer 4 vs Layer 7 routing, health checks, and real-world deployment patterns."
+
+summary: "A practical guide to load balancing concepts every software engineer should understand when designing scalable systems."
+
+publishedDate: "2026-07-08"
+updatedDate: "2026-07-08"
+
+author: "niraj-mourya"
+
+category: "Engineering"
+
+articleType: "technical"
+contentType: "article"
+
+series: "engineering-foundations"
+
+tags:
+  - load-balancing
+  - system-design
+  - scalability
+  - networking
+  - backend
+
+topics:
+  - distributed-systems
+  - networking
+
+technologies:
+  - NGINX
+  - HAProxy
+  - AWS ALB
+  - AWS ELB
+
+keywords:
+  - load balancer
+  - reverse proxy
+  - round robin
+  - least connections
+  - layer 4
+  - layer 7
+  - health checks
+
+coverImage: "/images/articles/load-balancing-fundamentals/cover.png"
+
+featured: true
+draft: false
+
+difficulty: intermediate
+readingLevel: intermediate
+---
+
+As applications grow, a single server eventually becomes a bottleneck.
+
+Adding more servers is straightforward—but deciding **how incoming traffic reaches those servers** is where system design becomes interesting.
+
+This is the responsibility of a **Load Balancer**.
+
+In this article, we'll explore how load balancers work, why they are essential for scalable systems, and the strategies used by modern production environments.
+
+---
+
+## Why Do We Need Load Balancing?
+
+Imagine an application serving hundreds of thousands of users.
+
+Even a powerful server eventually reaches its limits due to:
+
+- CPU saturation
+- Memory exhaustion
+- Network bandwidth limitations
+- Connection limits
+
+The obvious solution is **Horizontal Scaling**.
+
+Instead of running:
+
+```text
+1 Server
+```
+
+we run:
+
+```text
+10 Servers
+```
+
+But this raises an important question:
+
+> **How does each user know which server should handle their request?**
+
+This is exactly the problem that load balancers solve.
+
+---
+
+## What is a Load Balancer?
+
+A **Load Balancer** sits between clients and backend servers.
+
+Its primary responsibilities are:
+
+- Accept incoming requests
+- Distribute traffic
+- Prevent server overload
+- Improve availability
+- Detect unhealthy servers
+
+Basic architecture:
+
+```text
+Clients
+    │
+    ▼
+Load Balancer
+    │
+ ┌──┴──┐
+ ▼     ▼
+Server A
+Server B
+Server C
+```
+
+---
+
+## Benefits of Load Balancing
+
+### Scalability
+
+New servers can be added without changing client applications.
+
+---
+
+### High Availability
+
+If one server fails, traffic is automatically redirected.
+
+---
+
+### Fault Tolerance
+
+A failing server does not impact the entire system.
+
+---
+
+### Zero-Downtime Deployments
+
+Servers can be removed from rotation during deployments and maintenance.
+
+<Callout type="tip">
+
+Modern cloud platforms rely heavily on load balancers to enable rolling deployments with minimal downtime.
+
+</Callout>
+
+---
+
+## Load Balancing Algorithms
+
+Different applications require different routing strategies.
+
+### Round Robin
+
+Requests are distributed sequentially.
+
+```text
+Request 1 → Server A
+
+Request 2 → Server B
+
+Request 3 → Server C
+
+Request 4 → Server A
+```
+
+Advantages
+
+- Simple
+- Even distribution
+
+Best suited for:
+
+- Similar server capacities
+- Uniform workloads
+
+---
+
+### Least Connections
+
+Traffic is routed to the server with the fewest active connections.
+
+Advantages
+
+- Better for long-running requests
+- Adapts to uneven workloads
+
+Typical use cases:
+
+- Streaming
+- Chat applications
+- WebSocket services
+
+---
+
+### IP Hash
+
+Requests from the same client IP always reach the same backend.
+
+Advantages
+
+- Session persistence
+- Sticky sessions
+
+Limitations
+
+- Uneven distribution
+- Less flexible scaling
+
+---
+
+## Layer 4 vs Layer 7 Load Balancing
+
+| Feature | Layer 4 | Layer 7 |
+| --- | --- | --- |
+| Protocol | TCP / UDP | HTTP / HTTPS |
+| Routing | IP + Port | URL, Headers, Cookies |
+| Performance | Faster | Slightly slower |
+| Flexibility | Limited | High |
+
+### Layer 4
+
+Routes packets based on:
+
+- IP Address
+- TCP Port
+
+Does not inspect HTTP requests.
+
+Ideal when maximum throughput is required.
+
+---
+
+### Layer 7
+
+Routes requests using application-level information such as:
+
+- URL path
+- Headers
+- Cookies
+- Hostname
+
+Examples:
+
+```text
+/api/*
+
+→ API Servers
+
+/blog/*
+
+→ Blog Servers
+
+/admin/*
+
+→ Admin Servers
+```
+
+Layer 7 routing enables much smarter request handling.
+
+---
+
+## Health Checks
+
+A load balancer continuously monitors backend servers.
+
+Typical health checks verify:
+
+- Response status
+- Response time
+- TCP connectivity
+- Custom health endpoints
+
+If a server becomes unhealthy, it is automatically removed from rotation until it recovers.
+
+<Callout type="info">
+
+Health checks significantly improve reliability by preventing traffic from reaching failed instances.
+
+</Callout>
+
+---
+
+## Production Architecture
+
+A simplified production deployment might look like this:
+
+```text
+Users
+   │
+   ▼
+Load Balancer
+   │
+ ┌─┴─────────────┐
+ ▼               ▼
+Web Server A   Web Server B
+      │
+      ▼
+Database
+      │
+      ▼
+Redis Cache
+```
+
+Cloud providers offer managed load balancing services such as:
+
+- AWS Application Load Balancer (ALB)
+- AWS Elastic Load Balancer (ELB)
+- Google Cloud Load Balancer
+- Azure Load Balancer
+
+Popular self-managed solutions include:
+
+- NGINX
+- HAProxy
+- Traefik
+
+---
+
+## Load Balancer vs Reverse Proxy
+
+These terms are often confused.
+
+| Feature | Reverse Proxy | Load Balancer |
+| --- | --- | --- |
+| Sits in front of servers | ✅ | ✅ |
+| Forwards requests | ✅ | ✅ |
+| Distributes traffic | Optional | Primary purpose |
+| SSL Termination | ✅ | ✅ |
+| Caching | Often | Sometimes |
+
+Many modern tools—including **NGINX** and **HAProxy**—can function as both a reverse proxy and a load balancer.
+
+---
+
+## Key Takeaways
+
+- Load balancers distribute requests across multiple backend servers.
+- They enable horizontal scalability and improve system reliability.
+- Different routing algorithms are suitable for different workloads.
+- Layer 4 prioritizes speed, while Layer 7 provides intelligent routing.
+- Health checks prevent traffic from reaching failed servers.
+- Modern distributed systems rely heavily on load balancing for resilience and scalability.
+
+---
+
+## Conclusion
+
+Load balancing is one of the foundational building blocks of distributed systems.
+
+Without it, scaling beyond a single server becomes difficult, deployments become risky, and failures have a much larger impact.
+
+Understanding how load balancers work—and when to use different routing strategies—is an essential skill for both software engineers and system designers.
+
+---
+
+## References
+
+- Designing Data-Intensive Applications — Martin Kleppmann
+- NGINX Documentation
+- HAProxy Documentation
+- AWS Elastic Load Balancing Documentation
+- Google Cloud Load Balancing Documentation
+
+---
+
+## Continue Reading
+
+- Database Scaling Fundamentals
+- Microservices vs Monolithic Architecture
+- CAP Theorem *(Coming Soon)*
+- API Gateway vs Load Balancer *(Coming Soon)*

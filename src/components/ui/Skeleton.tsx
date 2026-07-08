@@ -5,7 +5,7 @@ import MuiSkeleton, {
 } from "@mui/material/Skeleton";
 import { forwardRef } from "react";
 
-export interface SkeletonProps extends MuiSkeletonProps {}
+export type SkeletonProps = MuiSkeletonProps;
 
 /**
  * Loading placeholder with default wave animation.

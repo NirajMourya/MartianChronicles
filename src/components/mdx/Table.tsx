@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import type { HTMLAttributes } from "react";
 
-export interface TableProps extends HTMLAttributes<HTMLTableElement> {}
+export type TableProps = HTMLAttributes<HTMLTableElement>;
 
 /**
  * Responsive table wrapper for MDX documents.

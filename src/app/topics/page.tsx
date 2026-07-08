@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { DiscoveryPageShell } from "@/components/content/DiscoveryPageShell";
 import { TagCloud } from "@/components/content/TagCloud";
-import { seoDefaults, siteMetadata } from "@/config";
+import { siteMetadata } from "@/config";
 import { getAllTopics } from "@/lib/content";
 
 export async function generateMetadata(): Promise<Metadata> {

@@ -3,7 +3,7 @@
 import MuiBadge, { type BadgeProps as MuiBadgeProps } from "@mui/material/Badge";
 import { forwardRef } from "react";
 
-export interface BadgeProps extends MuiBadgeProps {}
+export type BadgeProps = MuiBadgeProps;
 
 /**
  * Inline status/count badge.

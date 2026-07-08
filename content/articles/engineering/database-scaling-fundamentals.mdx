@@ -1,0 +1,464 @@
+---
+title: "Database Scaling Fundamentals"
+
+slug: "database-scaling-fundamentals"
+
+description: "Learn the fundamentals of database scaling, including vertical scaling, horizontal scaling, replication, sharding, indexing, caching, and the CAP theorem."
+
+summary: "A practical guide to the database concepts every software engineer should understand when designing scalable systems."
+
+publishedDate: "2026-07-08"
+updatedDate: "2026-07-08"
+
+author: "niraj-mourya"
+
+category: "Engineering"
+
+articleType: "technical"
+contentType: "article"
+
+series: "engineering-foundations"
+
+tags:
+  - databases
+  - system-design
+  - scalability
+  - backend
+  - distributed-systems
+
+topics:
+  - database-scaling
+  - distributed-systems
+
+technologies:
+  - PostgreSQL
+  - MySQL
+  - Redis
+
+keywords:
+  - database scaling
+  - replication
+  - sharding
+  - indexing
+  - caching
+  - CAP theorem
+  - horizontal scaling
+  - vertical scaling
+
+coverImage: "/images/articles/database-scaling-fundamentals/cover.png"
+
+featured: true
+draft: false
+
+difficulty: intermediate
+readingLevel: intermediate
+---
+
+As applications grow, adding more application servers is only part of the scalability story.
+
+In most production systems, **the database becomes the bottleneck long before the application code does.**
+
+Understanding concepts such as replication, sharding, indexing, caching, and the CAP theorem is essential for designing reliable, scalable systems.
+
+In this article, we'll explore each of these concepts and understand when to use them.
+
+---
+
+## Vertical vs Horizontal Scaling
+
+Before discussing distributed databases, it's important to understand how applications scale.
+
+### Vertical Scaling (Scale Up)
+
+Vertical scaling means increasing the capacity of a **single server**.
+
+Examples include:
+
+- More CPU cores
+- More RAM
+- Faster SSD storage
+
+### Advantages
+
+- Simple to implement
+- No architectural changes
+- Easy operational management
+
+### Limitations
+
+- Hardware has physical limits
+- Costs increase rapidly
+- Creates a single point of failure
+
+<Callout type="info">
+
+Vertical scaling is often the fastest solution during the early stages of a product, but eventually reaches hardware limits.
+
+</Callout>
+
+---
+
+### Horizontal Scaling (Scale Out)
+
+Horizontal scaling adds **more servers** instead of making one server larger.
+
+Instead of:
+
+```
+1 Large Database Server
+```
+
+You move towards:
+
+```
+10 Smaller Database Servers
+```
+
+### Advantages
+
+- Virtually unlimited scalability
+- Better fault tolerance
+- Higher availability
+
+### Challenges
+
+- Increased operational complexity
+- Distributed system challenges
+- Network communication overhead
+
+Horizontal scaling introduces concepts like **Replication** and **Sharding**.
+
+---
+
+## Database Replication
+
+Replication creates **multiple copies of the same data** across different database servers.
+
+### Why Replicate?
+
+Replication helps achieve:
+
+- Higher read throughput
+- Better availability
+- Disaster recovery
+- Fault tolerance
+
+### Primary–Replica Architecture
+
+```text
+          Primary (Writes)
+               │
+      ┌────────┴────────┐
+      │                 │
+ Replica 1         Replica 2
+```
+
+Typically:
+
+- All writes go to the Primary.
+- Read traffic is distributed across Replicas.
+
+---
+
+### Synchronous Replication
+
+The Primary waits until replicas acknowledge the write.
+
+Advantages
+
+- Strong consistency
+
+Disadvantages
+
+- Higher write latency
+
+---
+
+### Asynchronous Replication
+
+The Primary immediately acknowledges the write without waiting.
+
+Advantages
+
+- Faster writes
+- Better throughput
+
+Disadvantages
+
+- Replication lag
+- Eventual consistency
+
+<Callout type="warning">
+
+Asynchronous replication may briefly expose stale data because replicas can lag behind the primary.
+
+</Callout>
+
+---
+
+### Typical Use Cases
+
+Replication is commonly used in:
+
+- News websites
+- E-commerce platforms
+- Social media feeds
+- Analytics dashboards
+
+---
+
+## Database Sharding
+
+Replication copies data.
+
+**Sharding divides data.**
+
+Instead of storing every record in one database, data is partitioned across multiple databases.
+
+Example:
+
+```text
+Shard A → Users 1–1M
+
+Shard B → Users 1M–2M
+
+Shard C → Users 2M–3M
+```
+
+Each shard owns only a subset of the data.
+
+---
+
+### Why Shard?
+
+Sharding helps:
+
+- Scale writes
+- Handle massive datasets
+- Remove database bottlenecks
+
+---
+
+### Sharding Strategies
+
+#### Range-Based Sharding
+
+```text
+User ID 1–1000     → Shard A
+
+User ID 1001–2000  → Shard B
+```
+
+Advantages
+
+- Simple
+
+Disadvantages
+
+- Can create hotspots
+
+---
+
+#### Hash-Based Sharding
+
+```text
+hash(user_id) % N
+```
+
+Advantages
+
+- Better load distribution
+
+Disadvantages
+
+- Difficult to rebalance
+
+---
+
+#### Geo-Based Sharding
+
+```text
+US Users → US Database
+
+EU Users → EU Database
+
+APAC Users → APAC Database
+```
+
+Useful for:
+
+- Reduced latency
+- Data residency
+- Regulatory compliance
+
+---
+
+### Typical Use Cases
+
+- Messaging systems
+- Large SaaS platforms
+- Social networks
+
+---
+
+## Replication vs Sharding
+
+| Feature | Replication | Sharding |
+| --- | --- | --- |
+| Data | Copied | Partitioned |
+| Primary Benefit | Read scalability | Write scalability |
+| Complexity | Moderate | High |
+| Availability | High | Moderate |
+| Typical Use Case | High availability | Massive datasets |
+
+<Callout type="tip">
+
+Replication and sharding solve different problems and are often used together in large-scale systems.
+
+</Callout>
+
+---
+
+## Database Indexing
+
+Without an index, a query such as:
+
+```sql
+SELECT * FROM users
+WHERE email = 'user@example.com';
+```
+
+requires scanning every row.
+
+With an index, the database can directly locate the matching record.
+
+### Advantages
+
+- Faster lookups
+- Better query performance
+
+### Trade-offs
+
+- Slower writes
+- Additional storage
+- Index maintenance
+
+Indexes improve read performance but are not free.
+
+---
+
+## Read–Write Splitting
+
+Replication often enables Read–Write splitting.
+
+```text
+Application
+
+├── Writes → Primary
+
+└── Reads  → Replicas
+```
+
+Benefits:
+
+- Reduces Primary load
+- Improves read throughput
+
+Challenges:
+
+- Replication lag
+- Eventual consistency
+
+---
+
+## CAP Theorem
+
+A distributed system cannot simultaneously guarantee:
+
+- Consistency
+- Availability
+- Partition Tolerance
+
+During a network partition, a system must choose between:
+
+- Consistency
+- Availability
+
+Most large-scale internet systems prioritize:
+
+- Availability
+- Partition Tolerance
+
+and therefore accept **eventual consistency**.
+
+<Callout type="info">
+
+The CAP Theorem deserves its own deep dive. We'll cover it in a dedicated article.
+
+</Callout>
+
+---
+
+## Caching
+
+Sometimes the best database optimization is **avoiding the database altogether.**
+
+Popular caching technologies include:
+
+- Redis
+- Memcached
+
+Typical use cases:
+
+- Session storage
+- Frequently accessed queries
+- API responses
+- Rate limiting
+
+Caching significantly reduces database load and improves response times.
+
+---
+
+## Putting Everything Together
+
+Modern large-scale systems often combine multiple strategies:
+
+- Replication for read scalability
+- Sharding for write scalability
+- Indexing for query performance
+- Caching to reduce database load
+
+There is no single solution that solves every scalability problem.
+
+Good architecture combines these techniques based on system requirements.
+
+---
+
+## Key Takeaways
+
+- Vertical scaling is simple but limited.
+- Horizontal scaling enables long-term growth.
+- Replication improves read scalability and availability.
+- Sharding improves write scalability.
+- Indexes speed up reads while increasing write costs.
+- Caching reduces database load.
+- The CAP Theorem forces trade-offs in distributed systems.
+
+---
+
+## References
+
+- Designing Data-Intensive Applications — Martin Kleppmann
+- Database Internals — Alex Petrov
+- High Performance MySQL
+- PostgreSQL Documentation
+- Redis Documentation
+
+---
+
+## Continue Reading
+
+- CAP Theorem *(Coming Soon)*
+- Consistent Hashing *(Coming Soon)*
+- Load Balancing Strategies *(Coming Soon)*
+- Microservices vs Monolithic Architecture

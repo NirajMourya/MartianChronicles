@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import type { BlockquoteHTMLAttributes } from "react";
 
-export interface BlockQuoteProps extends BlockquoteHTMLAttributes<HTMLQuoteElement> {}
+export type BlockQuoteProps = BlockquoteHTMLAttributes<HTMLQuoteElement>;
 
 /**
  * Styled blockquote for long-form reading surfaces.

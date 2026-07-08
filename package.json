@@ -7,7 +7,8 @@
     "prebuild": "tsx src/lib/search/buildSearchIndex.ts",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "validate:prod": "npm run lint && npm run build"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

@@ -147,11 +147,9 @@ export async function writeSearchIndexFile(): Promise<void> {
 if (process.argv[1] && path.resolve(process.argv[1]).endsWith(path.normalize("src/lib/search/buildSearchIndex.ts"))) {
 	writeSearchIndexFile()
 		.then(() => {
-			// eslint-disable-next-line no-console
 			console.log(`Generated search index at ${outputPath}`);
 		})
 		.catch((error) => {
-			// eslint-disable-next-line no-console
 			console.error("Failed to generate search index", error);
 			process.exitCode = 1;
 		});

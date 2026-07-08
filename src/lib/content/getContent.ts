@@ -331,15 +331,54 @@ const parseContentFile = <K extends ContentCollection>(
 	};
 };
 
+const collectionCache = new Map<string, AnyContentEntry[]>();
+
+const getCollectionCacheKey = (
+	collection: ContentCollection,
+	includeDrafts: boolean,
+): string => `${collection}:${includeDrafts ? "with-drafts" : "published-only"}`;
+
+const getCachedCollectionEntries = <K extends ContentCollection>(
+	collection: K,
+	includeDrafts: boolean,
+): ContentEntry<K>[] => {
+	const shouldUseCache = process.env.NODE_ENV === "production";
+	const key = getCollectionCacheKey(collection, includeDrafts);
+	const cached = shouldUseCache ? collectionCache.get(key) : undefined;
+	if (cached) {
+		return cached as ContentEntry<K>[];
+	}
+
+	const files = loadCollectionFilePaths(collection);
+	const entries: ContentEntry<K>[] = [];
+
+	for (const file of files) {
+		try {
+			entries.push(parseContentFile(collection, file));
+		} catch (error) {
+			// Keep the app resilient in production even if one file is malformed.
+			if (process.env.NODE_ENV !== "production") {
+				throw error;
+			}
+			console.warn(String(error));
+		}
+	}
+
+	const filtered = includeDrafts ? entries : entries.filter((entry) => !entry.draft);
+	const sorted = sortByDateDesc(filtered);
+	if (shouldUseCache) {
+		collectionCache.set(key, sorted as AnyContentEntry[]);
+	}
+
+	return sorted;
+};
+
 export const getCollectionContent = <K extends ContentCollection>(
 	collection: K,
 	options: ContentLoadOptions = {},
 ): ContentEntry<K>[] => {
 	const includeDrafts = options.includeDrafts ?? process.env.NODE_ENV !== "production";
-	const files = loadCollectionFilePaths(collection);
-	const entries = files.map((file) => parseContentFile(collection, file));
-	const filtered = includeDrafts ? entries : entries.filter((entry) => !entry.draft);
-	const sorted = sortByDateDesc(filtered);
+	const sorted = getCachedCollectionEntries(collection, includeDrafts);
 
 	if (typeof options.limit === "number") {
 		return sorted.slice(0, options.limit);

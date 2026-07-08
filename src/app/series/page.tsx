@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { SeriesCard } from "@/components/content/SeriesCard";
 import { DiscoveryPageShell } from "@/components/content/DiscoveryPageShell";
-import { seoDefaults, siteMetadata } from "@/config";
+import { siteMetadata } from "@/config";
 import { getSeries } from "@/lib/content";
 
 export async function generateMetadata(): Promise<Metadata> {

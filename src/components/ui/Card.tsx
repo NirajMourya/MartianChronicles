@@ -3,7 +3,7 @@
 import MuiCard, { type CardProps as MuiCardProps } from "@mui/material/Card";
 import { forwardRef } from "react";
 
-export interface CardProps extends MuiCardProps {}
+export type CardProps = MuiCardProps;
 
 /**
  * Content card with subtle border and no heavy shadow by default.

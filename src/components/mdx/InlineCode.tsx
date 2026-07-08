@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import type { HTMLAttributes } from "react";
 
-export interface InlineCodeProps extends HTMLAttributes<HTMLElement> {}
+export type InlineCodeProps = HTMLAttributes<HTMLElement>;
 
 /**
  * Inline code renderer for MDX prose.

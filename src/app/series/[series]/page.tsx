@@ -25,7 +25,6 @@ export async function generateMetadata({ params }: { readonly params: Promise<{ 
 	const { series } = await params;
 	const seriesEntries = getSeries({ includeDrafts: false });
 	const currentSeries = seriesEntries.find((entry) => entry.slug === series || entry.title === series);
-	const articles = getArticlesBySeries(series);
 
 	if (!currentSeries) {
 		return { title: seoDefaults.defaultTitle, description: seoDefaults.defaultDescription };

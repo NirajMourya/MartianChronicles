@@ -3,7 +3,7 @@
 import MuiChip, { type ChipProps as MuiChipProps } from "@mui/material/Chip";
 import { forwardRef } from "react";
 
-export interface ChipProps extends MuiChipProps {}
+export type ChipProps = MuiChipProps;
 
 /**
  * Small semantic label token for metadata and filters.

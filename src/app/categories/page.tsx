@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { CategoryCard } from "@/components/content/CategoryCard";
 import { DiscoveryPageShell } from "@/components/content/DiscoveryPageShell";
-import { seoDefaults, siteMetadata } from "@/config";
+import { siteMetadata } from "@/config";
 import { getAllCategories } from "@/lib/content";
 
 export async function generateMetadata(): Promise<Metadata> {

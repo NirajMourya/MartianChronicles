@@ -7,7 +7,7 @@ import { useThemeMode } from "@/hooks";
 
 import { IconButton, type IconButtonProps, Tooltip } from "../ui";
 
-export interface ThemeToggleProps extends Omit<IconButtonProps, "onClick" | "children"> {}
+export type ThemeToggleProps = Omit<IconButtonProps, "onClick" | "children">;
 
 /**
  * Toggle between dark and light mode using the global color-mode provider.

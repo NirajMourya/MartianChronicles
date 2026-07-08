@@ -26,9 +26,10 @@ const depthIndent: Readonly<Record<HeadingOutlineItem["depth"], number>> = {
 function useActiveHeading(headings: readonly HeadingOutlineItem[]) {
 	const [activeId, setActiveId] = useState<string>(headings[0]?.id ?? "");
 
+	const firstHeadingId = headings[0]?.id ?? "";
+
 	useEffect(() => {
 		if (headings.length === 0) {
-			setActiveId("");
 			return;
 		}
 
@@ -57,7 +58,7 @@ function useActiveHeading(headings: readonly HeadingOutlineItem[]) {
 		return () => observer.disconnect();
 	}, [headings]);
 
-	return activeId;
+	return activeId || firstHeadingId;
 }
 
 function TocList({ headings, activeId }: { readonly headings: readonly HeadingOutlineItem[]; readonly activeId: string }) {

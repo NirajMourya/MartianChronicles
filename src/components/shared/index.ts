@@ -20,3 +20,5 @@ export type { TextProps } from "./Text";
 
 export { ThemeToggle } from "./ThemeToggle";
 export type { ThemeToggleProps } from "./ThemeToggle";
+
+export { StructuredData } from "./StructuredData";

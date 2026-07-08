@@ -5,7 +5,7 @@ import MuiIconButton, {
 } from "@mui/material/IconButton";
 import { forwardRef } from "react";
 
-export interface IconButtonProps extends MuiIconButtonProps {}
+export type IconButtonProps = MuiIconButtonProps;
 
 /**
  * Icon-only button with accessible defaults.

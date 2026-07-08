@@ -35,8 +35,21 @@ const getSystemPreferredMode = (): ThemeMode => {
 		: "light";
 };
 
+const resolveInitialMode = (): ThemeMode => {
+	if (typeof window === "undefined") {
+		return themeConfig.defaultMode;
+	}
+
+	const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
+	if (isThemeMode(stored)) {
+		return stored;
+	}
+
+	return getSystemPreferredMode();
+};
+
 export function ColorModeProvider({ children }: { readonly children: ReactNode }) {
-	const [mode, setModeState] = useState<ThemeMode>(themeConfig.defaultMode);
+	const [mode, setModeState] = useState<ThemeMode>(resolveInitialMode);
 
 	const setMode = (nextMode: ThemeMode) => {
 		setModeState(nextMode);
@@ -50,15 +63,9 @@ export function ColorModeProvider({ children }: { readonly children: ReactNode }
 	};
 
 	useEffect(() => {
-		const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
-
-		if (isThemeMode(stored)) {
-			setModeState(stored);
+		if (typeof window === "undefined") {
 			return;
 		}
-
-		const systemMode = getSystemPreferredMode();
-		setModeState(systemMode);
 
 		const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 		const handleSystemModeChange = (event: MediaQueryListEvent) => {

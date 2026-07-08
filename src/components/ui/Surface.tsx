@@ -3,7 +3,7 @@
 import Paper, { type PaperProps } from "@mui/material/Paper";
 import { forwardRef } from "react";
 
-export interface SurfaceProps extends PaperProps {}
+export type SurfaceProps = PaperProps;
 
 /**
  * Themed surface block for grouped content sections.

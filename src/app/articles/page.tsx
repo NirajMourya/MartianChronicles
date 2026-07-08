@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 import { DiscoveryPageShell, Pagination, ContentGrid } from "@/components/content";
-import { Heading, Text, Link } from "@/components/shared";
+import { Heading, Link, StructuredData, Text } from "@/components/shared";
 import { Stack } from "@/components/ui";
-import { seoDefaults, siteMetadata } from "@/config";
+import { buildPageMetadata, buildWebPageJsonLd } from "@/lib/seo";
 import { getArticles, getFeaturedArticles, getRecentArticles } from "@/lib/content";
 import {
 	paginateCollection,
@@ -16,20 +16,11 @@ const pageSize = 9;
 export const dynamicParams = false;
 
 export async function generateMetadata(): Promise<Metadata> {
-	return {
+	return buildPageMetadata({
 		title: "Articles",
 		description: "Browse all articles in the Martian Chronicles archive.",
-		alternates: { canonical: `${siteMetadata.domain}/articles` },
-		openGraph: {
-			title: "Articles",
-			description: "Browse all articles in the Martian Chronicles archive.",
-			url: `${siteMetadata.domain}/articles`,
-			type: "website",
-			siteName: seoDefaults.openGraph.siteName,
-			locale: seoDefaults.openGraph.locale,
-			images: [seoDefaults.openGraph.defaultImage],
-		},
-	};
+		path: "/articles",
+	});
 }
 
 export default async function ArticlesIndexPage({
@@ -42,12 +33,18 @@ export default async function ArticlesIndexPage({
 	const featured = getFeaturedArticles(3);
 	const recent = getRecentArticles(3);
 	const articleCount = articles.length;
+	const webPageJsonLd = buildWebPageJsonLd(
+		"Articles",
+		"Browse all articles in the Martian Chronicles archive.",
+		"/articles",
+	);
 	const pageCount = Math.max(1, Math.ceil(articleCount / pageSize));
 	const page = resolvePageNumber(resolvedSearchParams, pageCount);
 	const paginatedArticles = paginateCollection(articles, page, pageSize);
 
 	return (
 		<>
+			<StructuredData id="jsonld-articles-page" data={webPageJsonLd} />
 			<DiscoveryPageShell
 				title="Articles"
 				description="Long-form writing, engineering notes, and connected ideas."

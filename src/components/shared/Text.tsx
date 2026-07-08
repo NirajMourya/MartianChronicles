@@ -3,7 +3,7 @@
 import Typography, { type TypographyProps } from "@mui/material/Typography";
 import { forwardRef } from "react";
 
-export interface TextProps extends TypographyProps {}
+export type TextProps = TypographyProps;
 
 /**
  * Body text primitive with readable defaults.

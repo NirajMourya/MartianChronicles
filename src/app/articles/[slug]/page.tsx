@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { ArticleLayout } from "@/components/article";
+import { StructuredData } from "@/components/shared";
 import { MDXProvider } from "@/components/mdx";
-import { seoDefaults, siteMetadata } from "@/config";
+import { seoDefaults } from "@/config";
 import { getArticleBySlug, getArticles, getRelatedContent } from "@/lib/content";
+import { buildArticleJsonLd, buildBreadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
 
 interface ArticlePageParams {
 	readonly slug: string;
@@ -44,38 +46,20 @@ export async function generateMetadata({
 
 	const title = article.title;
 	const description = article.description;
-	const canonical = article.canonicalUrl ?? `${siteMetadata.domain}${article.url}`;
 
-	return {
+	return buildPageMetadata({
 		title,
 		description,
-		keywords: [...new Set([...seoDefaults.keywords, ...article.tags, ...article.topics])],
-		alternates: {
-			canonical,
-		},
-		openGraph: {
-			title,
-			description,
-			url: canonical,
-			type: "article",
-			siteName: seoDefaults.openGraph.siteName,
-			locale: seoDefaults.openGraph.locale,
-			images: [
-				{
-					url: article.ogImage ?? seoDefaults.openGraph.defaultImage.url,
-					width: seoDefaults.openGraph.defaultImage.width,
-					height: seoDefaults.openGraph.defaultImage.height,
-					alt: article.coverAlt ?? title,
-				},
-			],
-		},
-		twitter: {
-			card: seoDefaults.twitter.card,
-			title,
-			description,
-			images: [article.ogImage ?? seoDefaults.openGraph.defaultImage.url],
-		},
-	};
+		path: article.url,
+		canonicalUrl: article.canonicalUrl,
+		keywords: [...article.tags, ...article.topics],
+		type: "article",
+		imageUrl: article.ogImage ?? seoDefaults.openGraph.defaultImage.url,
+		imageAlt: article.coverAlt ?? title,
+		publishedTime: article.publishedDate,
+		modifiedTime: article.updatedDate,
+		tags: article.tags,
+	});
 }
 
 export default async function ArticlePage({
@@ -103,29 +87,47 @@ export default async function ArticlePage({
 		title: entry.title,
 		href: entry.url,
 	}));
+	const articleJsonLd = buildArticleJsonLd({
+		title: article.title,
+		description: article.description,
+		path: article.url,
+		publishedTime: article.publishedDate,
+		modifiedTime: article.updatedDate,
+		image: article.ogImage,
+		tags: article.tags,
+	});
+	const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+		{ name: "Home", path: "/" },
+		{ name: "Articles", path: "/articles" },
+		{ name: article.title, path: article.url },
+	]);
 
 	return (
-		<ArticleLayout
-			article={article}
-			previousArticle={
-				previousArticle
-					? {
-							title: previousArticle.title,
-							href: previousArticle.url,
-						}
-					: undefined
-			}
-			nextArticle={
-				nextArticle
-					? {
-							title: nextArticle.title,
-							href: nextArticle.url,
-						}
-					: undefined
-			}
-			relatedArticles={related}
-		>
-			<MDXProvider source={article.body} />
-		</ArticleLayout>
+		<>
+			<StructuredData id="jsonld-article" data={articleJsonLd} />
+			<StructuredData id="jsonld-article-breadcrumbs" data={breadcrumbJsonLd} />
+			<ArticleLayout
+				article={article}
+				previousArticle={
+					previousArticle
+						? {
+								title: previousArticle.title,
+								href: previousArticle.url,
+							}
+						: undefined
+				}
+				nextArticle={
+					nextArticle
+						? {
+								title: nextArticle.title,
+								href: nextArticle.url,
+							}
+						: undefined
+				}
+				relatedArticles={related}
+			>
+				<MDXProvider source={article.body} />
+			</ArticleLayout>
+		</>
 	);
 }

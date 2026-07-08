@@ -1,6 +1,71 @@
 {
-  "generatedAt": "2026-07-08T16:42:33.774Z",
+  "generatedAt": "2026-07-08T21:39:46.186Z",
   "documents": [
+    {
+      "id": "articles:database-scaling-fundamentals",
+      "slug": "database-scaling-fundamentals",
+      "url": "/articles/database-scaling-fundamentals",
+      "title": "Database Scaling Fundamentals",
+      "description": "Learn the fundamentals of database scaling, including vertical scaling, horizontal scaling, replication, sharding, indexing, caching, and the CAP theorem.",
+      "headings": [
+        "Vertical vs Horizontal Scaling",
+        "Vertical Scaling (Scale Up)",
+        "Advantages",
+        "Limitations",
+        "Horizontal Scaling (Scale Out)",
+        "Advantages",
+        "Challenges",
+        "Database Replication",
+        "Why Replicate?",
+        "Primary–Replica Architecture",
+        "Synchronous Replication",
+        "Asynchronous Replication",
+        "Typical Use Cases",
+        "Database Sharding",
+        "Why Shard?",
+        "Sharding Strategies",
+        "Range-Based Sharding",
+        "Hash-Based Sharding",
+        "Geo-Based Sharding",
+        "Typical Use Cases",
+        "Replication vs Sharding",
+        "Database Indexing",
+        "Advantages",
+        "Trade-offs",
+        "Read–Write Splitting",
+        "CAP Theorem",
+        "Caching",
+        "Putting Everything Together",
+        "Key Takeaways",
+        "References",
+        "Continue Reading"
+      ],
+      "tags": [
+        "backend",
+        "databases",
+        "distributed-systems",
+        "scalability",
+        "system-design"
+      ],
+      "topics": [
+        "database-scaling",
+        "distributed-systems"
+      ],
+      "categories": [
+        "engineering"
+      ],
+      "technologies": [
+        "mysql",
+        "postgresql",
+        "redis"
+      ],
+      "series": [
+        "engineering-foundations"
+      ],
+      "body": "as applications grow, adding more application servers is only part of the scalability story. in most production systems, the database becomes the bottleneck long before the application code does. understanding concepts such as replication, sharding, indexing, caching, and the cap theorem is essential for designing reliable, scalable systems. in this article, we'll explore each of these concepts and understand when to use them. --- vertical vs horizontal scaling before discussing distributed databases, it's important to understand how applications scale. vertical scaling (scale up) vertical scaling means increasing the capacity of a single server. examples include: - more cpu cores - more ram - faster ssd storage advantages - simple to implement - no architectural changes - easy operational management limitations - hardware has physical limits - costs increase rapidly - creates a single point of failure <callout type=\"info\" vertical scaling is often the fastest solution during the early stages of a product, but eventually reaches hardware limits. </callout --- horizontal scaling (scale out) horizontal scaling adds more servers instead of making one server larger. instead of: you move towards: advantages - virtually unlimited scalability - better fault tolerance - higher availability challenges - increased operational complexity - distributed system challenges - network communication overhead horizontal scaling introduces concepts like replication and sharding. --- database replication replication creates multiple copies of the same data across different database servers. why replicate? replication helps achieve: - higher read throughput - better availability - disaster recovery - fault tolerance primary–replica architecture typically: - all writes go to the primary. - read traffic is distributed across replicas. --- synchronous replication the primary waits until replicas acknowledge the write. advantages - strong consistency disadvantages - higher write latency --- asynchronous replication the primary immediately acknowledges the write without waiting. advantages - faster writes - better throughput disadvantages - replication lag - eventual consistency <callout type=\"warning\" asynchronous replication may briefly expose stale data because replicas can lag behind the primary. </callout --- typical use cases replication is commonly used in: - news websites - e-commerce platforms - social media feeds - analytics dashboards --- database sharding replication copies data. sharding divides data. instead of storing every record in one database, data is partitioned across multiple databases. example: each shard owns only a subset of the data. --- why shard? sharding helps: - scale writes - handle massive datasets - remove database bottlenecks --- sharding strategies range-based sharding advantages - simple disadvantages - can create hotspots --- hash-based sharding advantages - better load distribution disadvantages - difficult to rebalance --- geo-based sharding useful for: - reduced latency - data residency - regulatory compliance --- typical use cases - messaging systems - large saas platforms - social networks --- replication vs sharding | feature | replication | sharding | | --- | --- | --- | | data | copied | partitioned | | primary benefit | read scalability | write scalability | | complexity | moderate | high | | availability | high | moderate | | typical use case | high availability | massive datasets | <callout type=\"tip\" replication and sharding solve different problems and are often used together in large-scale systems. </callout --- database indexing without an index, a query such as: requires scanning every row. with an index, the database can directly locate the matching record. advantages - faster lookups - better query performance trade-offs - slower writes - additional storage - index maintenance indexes improve read performance but are not free. --- read–write splitting replication often enables read–write splitting. benefits: - reduces primary load - improves read throughput challenges: - replication lag - eventual consistency --- cap theorem a distributed system cannot simultaneously guarantee: - consistency - availability - partition tolerance during a network partition, a system must choose between: - consistency - availability most large-scale internet systems prioritize: - availability - partition tolerance and therefore accept eventual consistency. <callout type=\"info\" the cap theorem deserves its own deep dive. we'll cover it in a dedicated article. </callout --- caching sometimes the best database optimization is avoiding the database altogether. popular caching technologies include: - redis - memcached typical use cases: - session storage - frequently accessed queries - api responses - rate limiting caching significantly reduces database load and improves response times. --- putting everything together modern large-scale systems often combine multiple strategies: - replication for read scalability - sharding for write scalability - indexing for query performance - caching to reduce database load there is no single solution that solves every scalability problem. good architecture combines these techniques based on system requirements. --- key takeaways - vertical scaling is simple but limited. - horizontal scaling enables long-term growth. - replication improves read scalability and availability. - sharding improves write scalability. - indexes speed up reads while increasing write costs. - caching reduces database load. - the cap theorem forces trade-offs in distributed systems. --- references - designing data-intensive applications — martin kleppmann - database internals — alex petrov - high performance mysql - postgresql documentation - redis documentation --- continue reading - cap theorem (coming soon) - consistent hashing (coming soon) - load balancing strategies (coming soon) - microservices vs monolithic architecture",
+      "contentType": "article",
+      "publishedDate": "2026-07-08"
+    },
     {
       "id": "articles:engineering/engineering-calm-systems",
       "slug": "engineering/engineering-calm-systems",
@@ -36,31 +101,93 @@
       "contentType": "article"
     },
     {
-      "id": "articles:engineering/microservices-vs-monlithic",
-      "slug": "engineering/microservices-vs-monlithic",
-      "url": "/articles/engineering/microservices-vs-monlithic",
-      "title": "Microservices vs Monolithic Architecture",
-      "description": "A practical comparison of monolithic and microservices architectures and when to choose each.",
+      "id": "articles:load-balancing-fundamentals",
+      "slug": "load-balancing-fundamentals",
+      "url": "/articles/load-balancing-fundamentals",
+      "title": "Load Balancing Fundamentals",
+      "description": "Learn the fundamentals of load balancing, including algorithms, Layer 4 vs Layer 7 routing, health checks, and real-world deployment patterns.",
       "headings": [
-        "🧱 What is Monolithic Architecture?",
+        "Why Do We Need Load Balancing?",
+        "What is a Load Balancer?",
+        "Benefits of Load Balancing",
+        "Scalability",
+        "High Availability",
+        "Fault Tolerance",
+        "Zero-Downtime Deployments",
+        "Load Balancing Algorithms",
+        "Round Robin",
+        "Least Connections",
+        "IP Hash",
+        "Layer 4 vs Layer 7 Load Balancing",
+        "Layer 4",
+        "Layer 7",
+        "Health Checks",
+        "Production Architecture",
+        "Load Balancer vs Reverse Proxy",
+        "Key Takeaways",
+        "Conclusion",
+        "References",
+        "Continue Reading"
+      ],
+      "tags": [
+        "backend",
+        "load-balancing",
+        "networking",
+        "scalability",
+        "system-design"
+      ],
+      "topics": [
+        "distributed-systems",
+        "networking"
+      ],
+      "categories": [
+        "engineering"
+      ],
+      "technologies": [
+        "aws alb",
+        "aws elb",
+        "haproxy",
+        "nginx"
+      ],
+      "series": [
+        "engineering-foundations"
+      ],
+      "body": "as applications grow, a single server eventually becomes a bottleneck. adding more servers is straightforward—but deciding how incoming traffic reaches those servers is where system design becomes interesting. this is the responsibility of a load balancer. in this article, we'll explore how load balancers work, why they are essential for scalable systems, and the strategies used by modern production environments. --- why do we need load balancing? imagine an application serving hundreds of thousands of users. even a powerful server eventually reaches its limits due to: - cpu saturation - memory exhaustion - network bandwidth limitations - connection limits the obvious solution is horizontal scaling. instead of running: we run: but this raises an important question: how does each user know which server should handle their request? this is exactly the problem that load balancers solve. --- what is a load balancer? a load balancer sits between clients and backend servers. its primary responsibilities are: - accept incoming requests - distribute traffic - prevent server overload - improve availability - detect unhealthy servers basic architecture: --- benefits of load balancing scalability new servers can be added without changing client applications. --- high availability if one server fails, traffic is automatically redirected. --- fault tolerance a failing server does not impact the entire system. --- zero-downtime deployments servers can be removed from rotation during deployments and maintenance. <callout type=\"tip\" modern cloud platforms rely heavily on load balancers to enable rolling deployments with minimal downtime. </callout --- load balancing algorithms different applications require different routing strategies. round robin requests are distributed sequentially. advantages - simple - even distribution best suited for: - similar server capacities - uniform workloads --- least connections traffic is routed to the server with the fewest active connections. advantages - better for long-running requests - adapts to uneven workloads typical use cases: - streaming - chat applications - websocket services --- ip hash requests from the same client ip always reach the same backend. advantages - session persistence - sticky sessions limitations - uneven distribution - less flexible scaling --- layer 4 vs layer 7 load balancing | feature | layer 4 | layer 7 | | --- | --- | --- | | protocol | tcp / udp | http / https | | routing | ip + port | url, headers, cookies | | performance | faster | slightly slower | | flexibility | limited | high | layer 4 routes packets based on: - ip address - tcp port does not inspect http requests. ideal when maximum throughput is required. --- layer 7 routes requests using application-level information such as: - url path - headers - cookies - hostname examples: layer 7 routing enables much smarter request handling. --- health checks a load balancer continuously monitors backend servers. typical health checks verify: - response status - response time - tcp connectivity - custom health endpoints if a server becomes unhealthy, it is automatically removed from rotation until it recovers. <callout type=\"info\" health checks significantly improve reliability by preventing traffic from reaching failed instances. </callout --- production architecture a simplified production deployment might look like this: cloud providers offer managed load balancing services such as: - aws application load balancer (alb) - aws elastic load balancer (elb) - google cloud load balancer - azure load balancer popular self-managed solutions include: - nginx - haproxy - traefik --- load balancer vs reverse proxy these terms are often confused. | feature | reverse proxy | load balancer | | --- | --- | --- | | sits in front of servers | ✅ | ✅ | | forwards requests | ✅ | ✅ | | distributes traffic | optional | primary purpose | | ssl termination | ✅ | ✅ | | caching | often | sometimes | many modern tools—including nginx and haproxy—can function as both a reverse proxy and a load balancer. --- key takeaways - load balancers distribute requests across multiple backend servers. - they enable horizontal scalability and improve system reliability. - different routing algorithms are suitable for different workloads. - layer 4 prioritizes speed, while layer 7 provides intelligent routing. - health checks prevent traffic from reaching failed servers. - modern distributed systems rely heavily on load balancing for resilience and scalability. --- conclusion load balancing is one of the foundational building blocks of distributed systems. without it, scaling beyond a single server becomes difficult, deployments become risky, and failures have a much larger impact. understanding how load balancers work—and when to use different routing strategies—is an essential skill for both software engineers and system designers. --- references - designing data-intensive applications — martin kleppmann - nginx documentation - haproxy documentation - aws elastic load balancing documentation - google cloud load balancing documentation --- continue reading - database scaling fundamentals - microservices vs monolithic architecture - cap theorem (coming soon) - api gateway vs load balancer (coming soon)",
+      "contentType": "article",
+      "publishedDate": "2026-07-08"
+    },
+    {
+      "id": "articles:microservices-vs-monolithic-architecture",
+      "slug": "microservices-vs-monolithic-architecture",
+      "url": "/articles/microservices-vs-monolithic-architecture",
+      "title": "Microservices vs Monolithic Architecture",
+      "description": "Understand the differences between Monolithic and Microservices architectures, their trade-offs, and when to choose each approach.",
+      "headings": [
+        "What is Monolithic Architecture?",
         "Example",
-        "🔗 What is Microservices Architecture?",
+        "What is Microservices Architecture?",
         "Example",
-        "🧠 Core Difference (High Level)",
-        "✅ When Monolithic Architecture Makes Sense",
-        "✅ When Microservices Make Sense",
-        "⚠️ Common Misconception",
-        "🧭 A Practical Rule of Thumb",
-        "🔑 Key Takeaways"
+        "High-Level Comparison",
+        "When Should You Choose a Monolith?",
+        "When Should You Choose Microservices?",
+        "Common Misconception",
+        "Practical Rule of Thumb",
+        "Key Takeaways",
+        "Architecture Comparison",
+        "Conclusion",
+        "References",
+        "Continue Reading"
       ],
       "tags": [
         "architecture",
         "backend",
+        "microservices",
+        "monolith",
         "system-design"
       ],
       "topics": [
-        "software-architecture",
-        "systems-design"
+        "distributed-systems",
+        "software-architecture"
       ],
       "categories": [
         "engineering"
@@ -72,8 +199,9 @@
       "series": [
         "engineering-foundations"
       ],
-      "body": "software architecture isn’t about trends — it’s about choosing the right trade-offs. two common approaches dominate modern systems: - monolithic architecture - microservices architecture let’s break them down 👇 🧱 what is monolithic architecture? in a monolith, the entire application is built as one single unit. - ui - business logic - database access - authentication - apis 👉 all live in one codebase, deployed together. example an e-commerce app where: - user management - orders - payments - inventory are all part of one application and deployed as one service. 🔗 what is microservices architecture? in microservices, the application is split into small, independent services. each service: - owns a single responsibility - has its own codebase - can be deployed independently - communicates via apis (http, grpc, events) example same e-commerce app, but: - user service - order service - payment service - inventory service each runs independently and talks over the network. 🧠 core difference (high level) | aspect | monolith | microservices | |-------|----------|---------------| | codebase | single | multiple | | deployment | one unit | independent | | scaling | whole app | per service | | complexity | low initially | high initially | | operational overhead | low | high | | failure isolation | poor | better | ✅ when monolithic architecture makes sense monoliths are not bad. they’re often the right choice. use monoliths when: - you’re building an mvp - team size is small - domain complexity is low - you want faster development - operational simplicity matters real-world example - early-stage startup - internal tools - small saas products many successful companies started as monoliths (and some still are). ✅ when microservices make sense microservices shine at scale, not at the beginning. use microservices when: - large engineering teams - clear domain boundaries - need independent scaling - high availability requirements - multiple teams deploying frequently real-world example - large e-commerce platforms - streaming services - financial systems - companies like netflix, amazon (at scale) ⚠️ common misconception ❌ “microservices are better than monoliths” ✅ reality: microservices solve organizational and scaling problems, not small-codebase problems. many teams move too early — and pay the price in: - devops complexity - network failures - debugging difficulty 🧭 a practical rule of thumb start with a monolith. move to microservices when pain forces you to. good architecture evolves — it isn’t chosen on day 1. 🔑 key takeaways ✔ monoliths are simple and fast to build ✔ microservices add flexibility but complexity ✔ scale and team size matter more than trends ✔ architecture should match your problem !monolith vs microservice differences diagram 💬 if you’ve worked with both: what trade-offs did you face? would you choose differently next time?",
-      "contentType": "article"
+      "body": "as applications grow, one of the most important architectural decisions engineers face is whether to build everything as a single application or split it into multiple independent services. there isn't a universally correct answer. choosing the right architecture depends on factors such as your team's size, business requirements, scalability needs, operational maturity, and deployment strategy—not on what's currently trending. this article compares monolithic and microservices architectures, explains their trade-offs, and provides practical guidance on when to choose each approach. --- what is monolithic architecture? a monolithic architecture is an application where all components are developed, deployed, and maintained as a single unit. typically, a monolithic application contains: - user interface - business logic - authentication - database access - apis - background jobs everything lives inside one codebase and is deployed together. <callout type=\"info\" a monolithic architecture doesn't necessarily mean poor architecture. well-designed monoliths can be modular, maintainable, and highly scalable for many business domains. </callout example consider an e-commerce application. it includes: - user management - orders - payments - inventory all of these modules are packaged and deployed together as one application. --- what is microservices architecture? a microservices architecture breaks an application into multiple independent services, where each service owns a specific business capability. each service: - owns a single responsibility - has its own codebase - can be deployed independently - often manages its own database - communicates with other services using http, grpc, or asynchronous messaging example the same e-commerce platform might consist of: - user service - order service - payment service - inventory service each service can be developed, deployed, and scaled independently. --- high-level comparison | aspect | monolithic | microservices | | -------- | ---------- | ------------- | | codebase | single | multiple | | deployment | single deployment | independent deployments | | scaling | entire application | individual services | | complexity | lower initially | higher initially | | operational overhead | low | high | | failure isolation | limited | better | | team independence | limited | high | | deployment speed | slower as project grows | faster per service | --- when should you choose a monolith? a monolith is often the best choice when: - building an mvp - working with a small engineering team - the business domain is relatively simple - rapid iteration is important - operational simplicity is a priority examples include: - early-stage startups - internal business applications - small saas products - proof of concepts <callout type=\"tip\" many successful companies—including several unicorn startups—began with a monolithic architecture before evolving their systems over time. </callout --- when should you choose microservices? microservices become valuable when organizational and technical complexity increase. consider microservices when: - multiple engineering teams work independently - different services have different scaling requirements - high availability is critical - teams deploy frequently - business domains are clearly separated examples include: - large e-commerce platforms - financial systems - streaming platforms - enterprise saas products companies such as netflix and amazon successfully adopted microservices after reaching significant scale—not from day one. --- common misconception <callout type=\"warning\" microservices are not inherently better than monoliths. they solve organizational and scalability problems—not small codebase problems. </callout teams often adopt microservices too early and introduce unnecessary complexity, including: - distributed debugging - network latency - service discovery - devops overhead - observability challenges - distributed transactions --- practical rule of thumb <callout type=\"tip\" start with a well-structured monolith. move toward microservices only when real operational or organizational pain justifies the additional complexity. </callout good software architecture evolves alongside the business. --- key takeaways - monoliths are simple to build, deploy, and maintain. - microservices provide flexibility and independent scaling but introduce operational complexity. - team size and business requirements matter more than architectural trends. - there is no universally superior architecture. - the best architecture is the one that solves today's problems while allowing room for future growth. --- architecture comparison !comparison between monolithic and microservices architecture --- conclusion both monolithic and microservices architectures have their place. a monolith optimizes for simplicity, faster development, and lower operational overhead. microservices optimize for scalability, independent deployments, organizational growth, and resilience—but require significantly more operational maturity. instead of asking: \"which architecture is better?\" ask: \"which architecture best solves my current business and engineering challenges?\" the answer will often change as your product and organization evolve. --- references - martin fowler — monolith first - sam newman — building microservices - eric evans — domain-driven design - chris richardson — microservices patterns --- continue reading you may also enjoy: - system design fundamentals (coming soon) - cap theorem (coming soon) - rest vs graphql (coming soon) - event-driven architecture (coming soon)",
+      "contentType": "article",
+      "publishedDate": "2026-07-08"
     }
   ]
 }

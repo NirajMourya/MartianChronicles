@@ -3,7 +3,7 @@
 import type { ContainerProps } from "../ui";
 import { Container } from "../ui";
 
-export interface PageContainerProps extends ContainerProps {}
+export type PageContainerProps = ContainerProps;
 
 /**
  * Standard page-level width wrapper.

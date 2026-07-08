@@ -5,7 +5,7 @@ import MuiContainer, {
 } from "@mui/material/Container";
 import { forwardRef } from "react";
 
-export interface ContainerProps extends MuiContainerProps {}
+export type ContainerProps = MuiContainerProps;
 
 /**
  * Shared page-width container aligned to design-system width.

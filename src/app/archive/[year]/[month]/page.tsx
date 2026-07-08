@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { ArchiveTimeline, DiscoveryPageShell, EmptyCollection, Pagination } from "@/components/content";
-import { seoDefaults, siteMetadata } from "@/config";
+import { siteMetadata } from "@/config";
 import { getArticlesByArchive, getArticles } from "@/lib/content";
 import {
 	paginateCollection,
@@ -33,7 +33,6 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { readonly params: Promise<{ year: string; month: string }> }): Promise<Metadata> {
 	const { year, month } = await params;
-	const articles = getArticlesByArchive(year, month);
 
 	return {
 		title: `${year}-${month} Archive`,

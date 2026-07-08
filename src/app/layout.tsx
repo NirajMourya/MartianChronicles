@@ -2,8 +2,10 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 
 import { authorConfig, iconConfig, seoDefaults, siteMetadata, viewportConfig } from "@/config";
+import { StructuredData } from "@/components/shared";
 import { Footer, Navbar } from "@/components";
 import { SearchShortcut } from "@/components/search";
+import { buildOrganizationJsonLd, buildPersonJsonLd, buildWebsiteJsonLd } from "@/lib/seo";
 import { AppProviders } from "@/providers";
 import "./globals.css";
 
@@ -20,6 +22,9 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 const primaryAuthor = authorConfig.authors[authorConfig.primaryAuthorId];
+const websiteJsonLd = buildWebsiteJsonLd();
+const organizationJsonLd = buildOrganizationJsonLd();
+const personJsonLd = buildPersonJsonLd();
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.domain),
@@ -106,6 +111,9 @@ export default function RootLayout({
           <main id="main-content">{children}</main>
           <Footer />
         </AppProviders>
+        <StructuredData id="jsonld-website" data={websiteJsonLd} />
+        <StructuredData id="jsonld-organization" data={organizationJsonLd} />
+        <StructuredData id="jsonld-person" data={personJsonLd} />
       </body>
     </html>
   );
