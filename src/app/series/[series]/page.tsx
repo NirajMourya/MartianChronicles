@@ -79,7 +79,7 @@ export default async function SeriesPage({
 		>
 			<Stack spacing={2.5}>
 				<Text>{currentSeries.description}</Text>
-				<Text as="p">Estimated total reading time: {totalReadingTime} min</Text>
+				<Text component="p">Estimated total reading time: {totalReadingTime} min</Text>
 				<div aria-hidden style={{ border: "1px dashed currentColor", borderRadius: 8, padding: 12 }}>
 					Progress indicator placeholder
 				</div>
