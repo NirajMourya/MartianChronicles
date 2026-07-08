@@ -22,17 +22,19 @@ export function SearchInput({ value, placeholder, autoFocus, onChange, onKeyDown
 			value={value}
 			onChange={(event) => onChange(event.target.value)}
 			onKeyDown={onKeyDown}
-			inputProps={{
-				"aria-label": "Search content",
-				autoComplete: "off",
-				spellCheck: false,
-			}}
-			InputProps={{
-				startAdornment: (
-					<InputAdornment position="start">
-						<SearchRounded fontSize="small" color="action" />
-					</InputAdornment>
-				),
+			slotProps={{
+				input: {
+					startAdornment: (
+						<InputAdornment position="start">
+							<SearchRounded fontSize="small" color="action" />
+						</InputAdornment>
+					),
+				},
+				htmlInput: {
+					"aria-label": "Search content",
+					autoComplete: "off",
+					spellCheck: false,
+				},
 			}}
 		/>
 	);
