@@ -4,6 +4,9 @@ export type { ArticleCardProps } from "./ArticleCard";
 export { ArticleLayout } from "./ArticleLayout";
 export type { ArticleLayoutProps } from "./ArticleLayout";
 
+export { ArticleSeriesItem } from "./ArticleSeriesItem";
+export type { ArticleSeriesItemProps } from "./ArticleSeriesItem";
+
 export { FeaturedArticleCard } from "./FeaturedArticleCard";
 export type { FeaturedArticleCardProps } from "./FeaturedArticleCard";
 
