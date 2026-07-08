@@ -65,6 +65,7 @@ const baseFrontmatterSchema = z.object({
 const articlesFrontmatterSchema = baseFrontmatterSchema.extend({
 	contentType: z.literal("article").default("article"),
 	articleType: z.enum(["technical", "personal"]).default("technical"),
+	seriesOrder: z.number().int().positive().optional(),
 	category: z.string().min(1),
 	topics: z.array(z.string().min(1)).min(1),
 	tags: z.array(z.string().min(1)).min(1),
