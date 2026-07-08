@@ -26,12 +26,12 @@ export interface MDXProviderProps {
 }
 
 const mdxComponents = {
-	h1: (props: ComponentPropsWithoutRef<"h1">) => <Heading level={1} {...props} />,
-	h2: (props: ComponentPropsWithoutRef<"h2">) => <Heading level={2} {...props} />,
-	h3: (props: ComponentPropsWithoutRef<"h3">) => <Heading level={3} {...props} />,
-	h4: (props: ComponentPropsWithoutRef<"h4">) => <Heading level={4} {...props} />,
-	h5: (props: ComponentPropsWithoutRef<"h5">) => <Heading level={5} {...props} />,
-	h6: (props: ComponentPropsWithoutRef<"h6">) => <Heading level={6} {...props} />,
+	h1: (props: ComponentPropsWithoutRef<"h1">) => <Heading level={1} {...props}>{props.children}</Heading>,
+	h2: (props: ComponentPropsWithoutRef<"h2">) => <Heading level={2} {...props}>{props.children}</Heading>,
+	h3: (props: ComponentPropsWithoutRef<"h3">) => <Heading level={3} {...props}>{props.children}</Heading>,
+	h4: (props: ComponentPropsWithoutRef<"h4">) => <Heading level={4} {...props}>{props.children}</Heading>,
+	h5: (props: ComponentPropsWithoutRef<"h5">) => <Heading level={5} {...props}>{props.children}</Heading>,
+	h6: (props: ComponentPropsWithoutRef<"h6">) => <Heading level={6} {...props}>{props.children}</Heading>,
 	pre: (props: ComponentPropsWithoutRef<"pre">) => <CodeBlock {...props} />,
 	code: (props: ComponentPropsWithoutRef<"code">) => {
 		if ((props.className ?? "").includes("language-")) {
