@@ -30,13 +30,20 @@ const referenceSchema = z.object({
 	url: z.url(),
 });
 
+const contentDateSchema = z.preprocess((value) => {
+	if (value instanceof Date) {
+		return value.toISOString();
+	}
+	return value;
+}, z.string().datetime({ offset: true }).or(z.string().date()));
+
 const baseFrontmatterSchema = z.object({
 	title: z.string().min(1),
 	slug: z.string().min(1).optional(),
 	description: z.string().min(1),
 	summary: z.string().min(1).optional(),
-	publishedDate: z.string().datetime({ offset: true }).or(z.string().date()).optional(),
-	updatedDate: z.string().datetime({ offset: true }).or(z.string().date()).optional(),
+	publishedDate: contentDateSchema.optional(),
+	updatedDate: contentDateSchema.optional(),
 	tags: z.array(z.string().min(1)).default([]),
 	topics: z.array(z.string().min(1)).default([]),
 	category: z.string().min(1).optional(),
@@ -119,18 +126,18 @@ export type CollectionFrontmatterMap = {
 	[K in keyof FrontmatterSchemaMap]: z.infer<FrontmatterSchemaMap[K]>;
 };
 
-export interface ContentEntry<K extends ContentCollection = ContentCollection>
-	extends CollectionFrontmatterMap[K] {
-	readonly id: string;
-	readonly collection: K;
-	readonly slug: string;
-	readonly sourcePath: string;
-	readonly url: string;
-	readonly body: string;
-	readonly excerpt: string;
-	readonly readingTimeMinutes: number;
-	readonly wordCount: number;
-}
+export type ContentEntry<K extends ContentCollection = ContentCollection> =
+	CollectionFrontmatterMap[K] & {
+		readonly id: string;
+		readonly collection: K;
+		readonly slug: string;
+		readonly sourcePath: string;
+		readonly url: string;
+		readonly body: string;
+		readonly excerpt: string;
+		readonly readingTimeMinutes: number;
+		readonly wordCount: number;
+	};
 
 export interface ContentLoadOptions {
 	readonly includeDrafts?: boolean;
@@ -232,6 +239,30 @@ export const filterByTopic = <T extends { topics: readonly string[] }>(
 	topic: string,
 ): T[] =>
 	items.filter((item) => item.topics.some((entry) => entry.toLowerCase() === topic.toLowerCase()));
+
+export const filterBySeries = <T extends { series?: string }>(
+	items: readonly T[],
+	series: string,
+): T[] => items.filter((item) => item.series?.toLowerCase() === series.toLowerCase());
+
+export const filterByMonth = <T extends { publishedDate?: string; updatedDate?: string }>(
+	items: readonly T[],
+	year: string,
+	month: string,
+): T[] =>
+	items.filter((item) => {
+		const dateValue = item.publishedDate ?? item.updatedDate;
+		if (!dateValue) {
+			return false;
+		}
+
+		const date = new Date(dateValue);
+		if (Number.isNaN(date.getTime())) {
+			return false;
+		}
+
+		return String(date.getFullYear()) === year && String(date.getMonth() + 1).padStart(2, "0") === month;
+	});
 
 const getCollectionDirectory = (collection: ContentCollection): string =>
 	path.join(contentRootDirectory, collection);
@@ -349,3 +380,39 @@ export const extractMetadata = (entry: AnyContentEntry) => ({
 	technologies: entry.technologies,
 	readingTimeMinutes: entry.readingTimeMinutes,
 });
+
+export const groupByTerm = <
+	T extends {
+		tags?: readonly string[];
+		topics?: readonly string[];
+		category?: string;
+		series?: string;
+	},
+>(
+	items: readonly T[],
+	getter: (item: T) => readonly string[] | string | undefined,
+): Array<{ value: string; items: T[] }> => {
+	const groups = new Map<string, T[]>();
+
+	for (const item of items) {
+		const values = getter(item);
+		if (!values) {
+			continue;
+		}
+
+		for (const rawValue of Array.isArray(values) ? values : [values]) {
+			const value = rawValue.trim();
+			if (!value) {
+				continue;
+			}
+
+			const collection = groups.get(value) ?? [];
+			collection.push(item);
+			groups.set(value, collection);
+		}
+	}
+
+	return [...groups.entries()]
+		.map(([value, groupedItems]) => ({ value, items: groupedItems }))
+		.sort((a, b) => b.items.length - a.items.length || a.value.localeCompare(b.value));
+};

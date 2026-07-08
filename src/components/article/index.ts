@@ -1,6 +1,9 @@
 export { ArticleCard } from "./ArticleCard";
 export type { ArticleCardProps } from "./ArticleCard";
 
+export { ArticleLayout } from "./ArticleLayout";
+export type { ArticleLayoutProps } from "./ArticleLayout";
+
 export { FeaturedArticleCard } from "./FeaturedArticleCard";
 export type { FeaturedArticleCardProps } from "./FeaturedArticleCard";
 

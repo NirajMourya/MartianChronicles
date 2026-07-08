@@ -1,0 +1,79 @@
+{
+  "generatedAt": "2026-07-08T16:42:33.774Z",
+  "documents": [
+    {
+      "id": "articles:engineering/engineering-calm-systems",
+      "slug": "engineering/engineering-calm-systems",
+      "url": "/articles/engineering/engineering-calm-systems",
+      "title": "Engineering Calm Systems",
+      "description": "Principles for building software systems that stay understandable and resilient over time.",
+      "headings": [
+        "Why this matters",
+        "A simple rubric",
+        "Checklist"
+      ],
+      "tags": [
+        "architecture",
+        "engineering",
+        "reliability"
+      ],
+      "topics": [
+        "product-engineering",
+        "systems-design"
+      ],
+      "categories": [
+        "engineering"
+      ],
+      "technologies": [
+        "next.js",
+        "node.js",
+        "typescript"
+      ],
+      "series": [
+        "engineering-foundations"
+      ],
+      "body": "engineering calm systems building systems is easy. maintaining clarity over years is the hard part. [!note] this placeholder article exists to validate the mdx content pipeline end-to-end. why this matters - teams change. - product priorities shift. - infrastructure evolves. calm systems optimize for continuity of understanding. a simple rubric | dimension | question | | --- | --- | | clarity | can a new engineer reason about it in one session? | | safety | can changes be rolled out safely? | | resilience | can the system degrade gracefully? | checklist - [x] explicit boundaries - [x] typed contracts - [ ] automated quality gates everywhere a small code example: !architecture placeholder image [^1]: placeholder footnote to validate gfm footnotes.",
+      "contentType": "article"
+    },
+    {
+      "id": "articles:engineering/microservices-vs-monlithic",
+      "slug": "engineering/microservices-vs-monlithic",
+      "url": "/articles/engineering/microservices-vs-monlithic",
+      "title": "Microservices vs Monolithic Architecture",
+      "description": "A practical comparison of monolithic and microservices architectures and when to choose each.",
+      "headings": [
+        "🧱 What is Monolithic Architecture?",
+        "Example",
+        "🔗 What is Microservices Architecture?",
+        "Example",
+        "🧠 Core Difference (High Level)",
+        "✅ When Monolithic Architecture Makes Sense",
+        "✅ When Microservices Make Sense",
+        "⚠️ Common Misconception",
+        "🧭 A Practical Rule of Thumb",
+        "🔑 Key Takeaways"
+      ],
+      "tags": [
+        "architecture",
+        "backend",
+        "system-design"
+      ],
+      "topics": [
+        "software-architecture",
+        "systems-design"
+      ],
+      "categories": [
+        "engineering"
+      ],
+      "technologies": [
+        "node.js",
+        "typescript"
+      ],
+      "series": [
+        "engineering-foundations"
+      ],
+      "body": "software architecture isn’t about trends — it’s about choosing the right trade-offs. two common approaches dominate modern systems: - monolithic architecture - microservices architecture let’s break them down 👇 🧱 what is monolithic architecture? in a monolith, the entire application is built as one single unit. - ui - business logic - database access - authentication - apis 👉 all live in one codebase, deployed together. example an e-commerce app where: - user management - orders - payments - inventory are all part of one application and deployed as one service. 🔗 what is microservices architecture? in microservices, the application is split into small, independent services. each service: - owns a single responsibility - has its own codebase - can be deployed independently - communicates via apis (http, grpc, events) example same e-commerce app, but: - user service - order service - payment service - inventory service each runs independently and talks over the network. 🧠 core difference (high level) | aspect | monolith | microservices | |-------|----------|---------------| | codebase | single | multiple | | deployment | one unit | independent | | scaling | whole app | per service | | complexity | low initially | high initially | | operational overhead | low | high | | failure isolation | poor | better | ✅ when monolithic architecture makes sense monoliths are not bad. they’re often the right choice. use monoliths when: - you’re building an mvp - team size is small - domain complexity is low - you want faster development - operational simplicity matters real-world example - early-stage startup - internal tools - small saas products many successful companies started as monoliths (and some still are). ✅ when microservices make sense microservices shine at scale, not at the beginning. use microservices when: - large engineering teams - clear domain boundaries - need independent scaling - high availability requirements - multiple teams deploying frequently real-world example - large e-commerce platforms - streaming services - financial systems - companies like netflix, amazon (at scale) ⚠️ common misconception ❌ “microservices are better than monoliths” ✅ reality: microservices solve organizational and scaling problems, not small-codebase problems. many teams move too early — and pay the price in: - devops complexity - network failures - debugging difficulty 🧭 a practical rule of thumb start with a monolith. move to microservices when pain forces you to. good architecture evolves — it isn’t chosen on day 1. 🔑 key takeaways ✔ monoliths are simple and fast to build ✔ microservices add flexibility but complexity ✔ scale and team size matter more than trends ✔ architecture should match your problem !monolith vs microservice differences diagram 💬 if you’ve worked with both: what trade-offs did you face? would you choose differently next time?",
+      "contentType": "article"
+    }
+  ]
+}

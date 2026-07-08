@@ -3,7 +3,7 @@
 import Typography, { type TypographyProps } from "@mui/material/Typography";
 import { forwardRef } from "react";
 
-export interface HeadingProps extends Omit<TypographyProps, "variant"> {
+export interface HeadingProps extends TypographyProps {
 	readonly level?: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
@@ -20,10 +20,10 @@ const variantByLevel = {
  * Semantic heading primitive with level-to-typography mapping.
  */
 export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(function Heading(
-	{ level = 2, component, ...props },
+	{ level = 2, component, variant, ...props },
 	ref,
 ) {
-	const variant = variantByLevel[level];
-	const Component = component ?? variant;
-	return <Typography ref={ref} variant={variant} component={Component} {...props} />;
+	const resolvedVariant = variant ?? variantByLevel[level];
+	const Component = component ?? resolvedVariant;
+	return <Typography ref={ref} variant={resolvedVariant} component={Component} {...props} />;
 });

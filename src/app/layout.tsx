@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 
 import { authorConfig, iconConfig, seoDefaults, siteMetadata, viewportConfig } from "@/config";
 import { Footer, Navbar } from "@/components";
+import { SearchShortcut } from "@/components/search";
 import { AppProviders } from "@/providers";
 import "./globals.css";
 
@@ -101,6 +102,7 @@ export default function RootLayout({
         </a>
         <AppProviders>
           <Navbar />
+          <SearchShortcut showTrigger={false} enableHotkey />
           <main id="main-content">{children}</main>
           <Footer />
         </AppProviders>

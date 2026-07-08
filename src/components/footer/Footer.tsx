@@ -25,7 +25,7 @@ export function Footer() {
 				<Stack spacing={4}>
 					<Stack spacing={1.5}>
 						<Logo variant="horizontal" size="sm" />
-						<Typography variant="body2" color="text.secondary" maxWidth={560}>
+						<Typography variant="body2" color="text.secondary" sx={{ maxWidth: 560 }}>
 							{footerConfig.description}
 						</Typography>
 					</Stack>

@@ -1,11 +1,11 @@
 "use client";
 
-import SearchRounded from "@mui/icons-material/SearchRounded";
 import Box from "@mui/material/Box";
 
 import type { NavigationItem as NavigationItemConfig } from "@/config/navigation";
 
-import { Button, IconButton, Tooltip } from "@/components/ui";
+import { SearchShortcut } from "@/components/search";
+import { Button } from "@/components/ui";
 import { ThemeToggle } from "@/components/shared";
 
 export interface NavigationActionsProps {
@@ -24,11 +24,7 @@ export function NavigationActions({ cta }: NavigationActionsProps) {
 				gap: 1,
 			}}
 		>
-			<Tooltip title="Search (coming soon)">
-				<IconButton aria-label="Search" onClick={() => {}}>
-					<SearchRounded fontSize="small" />
-				</IconButton>
-			</Tooltip>
+			<SearchShortcut enableHotkey={false} />
 			<ThemeToggle />
 			<Button
 				component="a"

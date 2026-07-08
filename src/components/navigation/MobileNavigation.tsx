@@ -33,8 +33,8 @@ export function MobileNavigation({ items, pathname, cta }: MobileNavigationProps
 
 	return (
 		<Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center", gap: 0.5 }}>
-			<Tooltip title="Search (coming soon)">
-				<IconButton aria-label="Search" onClick={() => {}}>
+			<Tooltip title="Search">
+				<IconButton component="a" href="/search" aria-label="Search">
 					<SearchRounded fontSize="small" />
 				</IconButton>
 			</Tooltip>
