@@ -3,9 +3,15 @@
 import MuiIconButton, {
 	type IconButtonProps as MuiIconButtonProps,
 } from "@mui/material/IconButton";
+import type { ElementType } from "react";
 import { forwardRef } from "react";
 
-export type IconButtonProps = MuiIconButtonProps;
+export interface IconButtonProps extends MuiIconButtonProps {
+	readonly component?: ElementType;
+	readonly href?: string;
+	readonly target?: string;
+	readonly rel?: string;
+}
 
 /**
  * Icon-only button with accessible defaults.
