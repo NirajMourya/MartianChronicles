@@ -24,6 +24,6 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(function Hea
 	ref,
 ) {
 	const resolvedVariant = variant ?? variantByLevel[level];
-	const Component = component ?? resolvedVariant;
-	return <Typography ref={ref} variant={resolvedVariant} component={Component} {...props} />;
+	const resolvedComponent = component ?? (`h${level}` as const);
+	return <Typography ref={ref} variant={resolvedVariant} component={resolvedComponent} {...props} />;
 });

@@ -2,8 +2,6 @@
 
 import { useEffect } from "react";
 
-import Link from "next/link";
-
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import { Box, Typography } from "@mui/material";
 
@@ -37,7 +35,7 @@ export default function RootError({
 					>
 						Try again
 					</Button>
-					<Button component={Link} href="/" variant="outlined">
+					<Button href="/" variant="outlined">
 						Back to home
 					</Button>
 				</Box>

@@ -1,4 +1,4 @@
-import type { TypographyOptions } from "@mui/material/styles/createTypography";
+import type { TypographyVariantsOptions } from "@mui/material/styles";
 
 import { themeConfig } from "@/config/theme";
 
@@ -24,7 +24,7 @@ declare module "@mui/material/Typography" {
 /**
  * Reading-first type scale with generous line-height and restrained contrast.
  */
-export const createTypography = (): TypographyOptions => ({
+export const createTypography = (): TypographyVariantsOptions => ({
 	fontFamily: themeConfig.fonts.body,
 	h1: {
 		fontFamily: themeConfig.fonts.heading,

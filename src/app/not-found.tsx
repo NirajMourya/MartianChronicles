@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { Typography } from "@mui/material";
@@ -21,7 +19,6 @@ export default function NotFoundPage() {
 				</Typography>
 				<Stack direction="row" spacing={1.5}>
 					<Button
-						component={Link}
 						href="/"
 						variant="outlined"
 						startIcon={<ArrowBackRoundedIcon fontSize="small" />}
@@ -29,7 +26,6 @@ export default function NotFoundPage() {
 						Go home
 					</Button>
 					<Button
-						component={Link}
 						href="/search"
 						variant="contained"
 						startIcon={<SearchRoundedIcon fontSize="small" />}

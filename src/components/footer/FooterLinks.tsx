@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Link from "next/link";
 
+import { Link } from "@/components/shared";
 import type { FooterLinkSection } from "@/config/navigation";
 
 export interface FooterLinksProps {
@@ -22,8 +22,7 @@ export function FooterLinks({ sections }: FooterLinksProps) {
 					<Box component="ul" sx={{ listStyle: "none", p: 0, m: 0, display: "grid", gap: 0.75 }}>
 						{section.links.map((item) => (
 							<Box component="li" key={`${section.title}-${item.href}`}>
-								<Typography
-									component={Link}
+								<Link
 									href={item.href}
 									variant="body2"
 									color="text.secondary"
@@ -32,7 +31,7 @@ export function FooterLinks({ sections }: FooterLinksProps) {
 									sx={{ textDecoration: "none", "&:hover": { color: "text.primary" } }}
 								>
 									{item.label}
-								</Typography>
+								</Link>
 							</Box>
 						))}
 					</Box>

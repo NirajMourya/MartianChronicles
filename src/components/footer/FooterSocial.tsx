@@ -1,7 +1,6 @@
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Link from "next/link";
 
+import { Link } from "@/components/shared";
 import type { SocialLink } from "@/config/social";
 
 export interface FooterSocialProps {
@@ -15,9 +14,8 @@ export function FooterSocial({ links }: FooterSocialProps) {
 	return (
 		<Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
 			{links.map((link) => (
-				<Typography
+				<Link
 					key={link.platform}
-					component={Link}
 					href={link.href}
 					variant="body2"
 					color="text.secondary"
@@ -26,7 +24,7 @@ export function FooterSocial({ links }: FooterSocialProps) {
 					sx={{ textDecoration: "none", "&:hover": { color: "text.primary" } }}
 				>
 					{link.label}
-				</Typography>
+				</Link>
 			))}
 		</Box>
 	);

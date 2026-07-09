@@ -3,6 +3,7 @@
 import {
 	createContext,
 	type ReactNode,
+	useCallback,
 	useContext,
 	useEffect,
 	useMemo,
@@ -51,16 +52,16 @@ const resolveInitialMode = (): ThemeMode => {
 export function ColorModeProvider({ children }: { readonly children: ReactNode }) {
 	const [mode, setModeState] = useState<ThemeMode>(resolveInitialMode);
 
-	const setMode = (nextMode: ThemeMode) => {
+	const setMode = useCallback((nextMode: ThemeMode) => {
 		setModeState(nextMode);
 		if (typeof window !== "undefined") {
 			window.localStorage.setItem(THEME_STORAGE_KEY, nextMode);
 		}
-	};
+	}, []);
 
-	const toggleMode = () => {
+	const toggleMode = useCallback(() => {
 		setMode(mode === "dark" ? "light" : "dark");
-	};
+	}, [mode, setMode]);
 
 	useEffect(() => {
 		if (typeof window === "undefined") {
@@ -86,7 +87,7 @@ export function ColorModeProvider({ children }: { readonly children: ReactNode }
 			toggleMode,
 			isDarkMode: mode === "dark",
 		}),
-		[mode],
+		[mode, setMode, toggleMode],
 	);
 
 	return (

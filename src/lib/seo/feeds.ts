@@ -1,4 +1,4 @@
-import { Feed } from "feed";
+import { Feed, type Item } from "feed";
 
 import { authorConfig, rssConfig, siteMetadata } from "@/config";
 import { getArticles } from "@/lib/content";
@@ -30,7 +30,7 @@ function createFeed() {
 	for (const article of articles) {
 		const publishedAt = article.publishedDate ? new Date(article.publishedDate) : new Date();
 		const updatedAt = article.updatedDate ? new Date(article.updatedDate) : publishedAt;
-		feed.addItem({
+		const item: Item = {
 			title: article.title,
 			id: `${siteMetadata.domain}${article.url}`,
 			link: `${siteMetadata.domain}${article.url}`,
@@ -39,10 +39,12 @@ function createFeed() {
 			author: [{ name: primaryAuthor.name, email: primaryAuthor.email }],
 			date: publishedAt,
 			published: publishedAt,
-			updated: updatedAt,
 			category: article.tags.map((name) => ({ name })),
 			image: article.ogImage ? `${siteMetadata.domain}${article.ogImage}` : undefined,
-		});
+		};
+
+		feed.addItem(item);
+		feed.options.updated = updatedAt;
 	}
 
 	return feed;

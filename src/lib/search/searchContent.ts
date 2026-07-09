@@ -1,4 +1,5 @@
 import Fuse from "fuse.js";
+import type { FuseOptionKey } from "fuse.js";
 
 import searchIndexData from "@/generated/search-index.json";
 
@@ -22,9 +23,10 @@ export interface SearchHit {
 const payload = searchIndexData as SearchIndexPayload;
 const documents = payload.documents;
 const filterOptions = buildFilterOptions(documents);
+const fuseKeys: FuseOptionKey<SearchDocument>[] = [...rankingKeys];
 
 const fuse = new Fuse(documents, {
-	keys: rankingKeys,
+	keys: fuseKeys,
 	includeMatches: true,
 	includeScore: true,
 	ignoreLocation: true,

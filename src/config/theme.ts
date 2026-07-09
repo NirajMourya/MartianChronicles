@@ -58,7 +58,7 @@ export interface ThemeConfig {
 
 export const themeConfig: ThemeConfig = Object.freeze({
 	defaultMode: "dark",
-	supportedModes: Object.freeze(["dark", "light"]),
+	supportedModes: Object.freeze(["dark", "light"] as const),
 	fonts: Object.freeze({
 		heading: "'Space Grotesk', sans-serif",
 		body: "'Inter', sans-serif",
